@@ -1,0 +1,49 @@
+.add{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    font-family: "Mukta", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+form {
+    text-align: center; 
+    font-size: 15px;
+    border-radius: 10px;
+    border:none;
+    color:whitesmoke
+}
+input[type='text'],
+input[type='tel'],
+input[type='email'],
+input[type='number'],
+select {
+    width:100%;
+    padding:11px 16px;
+    margin:5px 0;
+    display:inline-block;
+    border-radius:4px;
+    border:none;
+    box-sizing: border-box;
+    font-family:'Times New Roman', Times, serif
+    
+}
+input[type='submit']{
+    width:30%;
+    background-color:#6db06d;
+    color:white;
+    border:none;
+    padding:8px 5px;
+    border-radius: 5px;
+    cursor:pointer;
+    font-size: 15px;
+    margin:10px 0;
+    margin-bottom: 2px;
+    font-family:'Times New Roman', Times, serif
+}
+input[type="submit"]:hover{
+    background-color:#18701c;
+    font-size:1.3rem ;
+    width:45%;
+  }

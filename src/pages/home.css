@@ -1,0 +1,101 @@
+.styled-table{
+    border-collapse: collapse;
+    margin:auto;
+    font-size:0.9em;
+    font-family:sans-serif;
+    max-width:1400px;
+    box-shadow:0 0 23px rgba(0,0,0,0.15);
+    border-radius: 10px;
+}
+
+.styled-table thead tr {
+    background-color:#476cb5;
+    color:#ffffff;
+    text-align:left;  
+}
+
+.styled-table th,
+.styled-table td{
+    padding:12px 15px;
+}
+
+.styled-table tbody tr{
+    border-bottom:1px solid #dddddd;
+}
+
+.styled-table tbody tr :nth-of-type(even){
+    background-color:#f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type{
+    border-bottom:2px solid #355cab; 
+}
+
+.btn{
+    border:none;
+    color:white;
+    padding:5px 8px;
+    text-align:center;
+    text-decoration:none;
+    display:inline-block;
+    border-radius:5px;
+    font-size:16px;
+    margin:4px 2px;
+    cursor:pointer;
+}
+
+.btn-edit{
+    background-color:green;
+}
+
+.btn-delete{
+    background-color:#f44336;
+}
+
+.btn-view{
+    background-color:#4777fa;
+}
+.dropdown{
+    width:20%;
+    margin:5px;
+    margin:5px auto;
+    text-align: center;
+}
+.btn-reset{
+    background-color : #009879;
+    color:white;
+     margin-left: 20px;
+
+}
+.btn-active{
+    background-color: #637ed8;
+    color:white;
+}
+.btn-inactive{
+    background-color:#8d6a78;
+    color:white;
+}
+.container{
+    margin:0 auto;
+    padding-left: 505px;
+   
+}
+.buttons{
+    padding-left: 20px;
+    gap:5px;
+}
+@media screen and (max-width: 500px) {
+    .styled-table th,
+    .styled-table td {
+      padding: 5px 7px;
+    }
+    
+    .btn {
+      font-size: 10px;
+      padding: 4px 6px;
+    }
+    
+    .dropdown {
+      width: 100%;
+    }
+  }
