@@ -1,37 +1,30 @@
-import React from 'react';
-import { useState,useEffect } from 'react';
-import { useNavigate,useParams} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import firedb from '../firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave, faEdit } from '@fortawesome/free-solid-svg-icons';
 import './addedit.css';
 
 const initialState = {
   name: '',
   email: '',
   phone: '',
-  status:''
-  
+  salary: '',
+  status: ''
 };
 
 export default function Addedit() {
   const [state, setState] = useState(initialState);
   const[data,setData]=useState({});
-  // const [data, setData] = useState({});
-
-  const { name, email, phone,salary,status} = state;
-  //navigate through pages
-
+  
   const navigate = useNavigate();
+  const { id } = useParams();
 
-// parameter hooks
-  const {id}=useParams();
   useEffect(() => {
     firedb.child('employeeData').on('value', (snapshot) => {
       if (snapshot.val() !== null) {
-        // console.log("Snap shot value is:",snapshot.val());
-        setData(prevData => (
-           { ...prevData, ...snapshot.val() })
-      );
+        setData(prevData => ({ ...prevData, ...snapshot.val() }));
       } else {
         setData({});
       }
@@ -40,7 +33,6 @@ export default function Addedit() {
       setData({}); 
     };
   }, [id]);
-  
 
   useEffect(() => {
     if (id && data[id]) {
@@ -52,11 +44,9 @@ export default function Addedit() {
       setState(initialState);
     };
   }, [id, data]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // Capitalize the first letter of the name
     if (name === 'name') {
       const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
       setState((prevState) => ({
@@ -70,16 +60,22 @@ export default function Addedit() {
       }));
     }
   };
-  
-
-  //toastify
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !email || !phone || !salary || !status ) {
+    const { name, email, phone, salary, status } = state;
+  
+    // Check if email or phone already exists in the database
+    const emailExists = Object.values(data).some(item => item.email === email);
+    const phoneExists = Object.values(data).some(item => item.phone === phone);
+  
+    if (!name || !email || !phone || !salary || !status) {
       toast.error('Please provide value in each input field');
+    } else if (emailExists && id !== Object.keys(data).find(key => key !== id)) {
+      toast.error('Email already exists');
+    } else if (phoneExists && id !== Object.keys(data).find(key => key !== id)) {
+      toast.error('Phone number already exists');
     } else {
-      if(!id){
+      if (!id) {
         firedb.child('employeeData').push(state, (err) => {
           if (err) {
             toast.error(err);
@@ -87,20 +83,46 @@ export default function Addedit() {
             toast.success('Employee details added successfully!');
           }
         });
-      }
-      else{
+      } else {
         firedb.child(`employeeData/${id}`).set(state, (err) => {
           if (err) {
             toast.error(err);
           } else {
-            toast.success('Employee details Updated successfully!');
+            toast.success('Employee details updated successfully!');
           }
         });
-
       }
       setTimeout(() => navigate('/'), 500);
     }
   };
+  
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const { name, email, phone, salary, status } = state;
+  //   if (!name || !email || !phone || !salary || !status) {
+  //     toast.error('Please provide value in each input field');
+  //   } else {
+  //     if (!id) {
+  //       firedb.child('employeeData').push(state, (err) => {
+  //         if (err) {
+  //           toast.error(err);
+  //         } else {
+  //           toast.success('Employee details added successfully!');
+  //         }
+  //       });
+  //     } else {
+  //       firedb.child(`employeeData/${id}`).set(state, (err) => {
+  //         if (err) {
+  //           toast.error(err);
+  //         } else {
+  //           toast.success('Employee details updated successfully!');
+  //         }
+  //       });
+  //     }
+  //     setTimeout(() => navigate('/'), 500);
+  //   }
+  // };
 
   return (
     <div style={{ marginTop: '30px' }} className='add'>
@@ -108,12 +130,11 @@ export default function Addedit() {
         style={{
           padding: '15px',
           margin: 'auto',
-          maxWidth: '450px',
+          maxWidth: '350px',
           alignContent: 'center',
-          border:'1px solid rgb(72,110,176)',
-          backgroundColor: 'rgb(72,125,166)',
-          boxShadow: '0 2px 4px rgba(52,115,156,0.15)',
-          
+          border: '1px solid rgb(72, 110, 176)',
+          backgroundColor: 'rgb(113,134,178)',
+          boxShadow: '0 2px 4px rgba(52, 115, 156, 0.15)',
         }}
         onSubmit={handleSubmit}
       >
@@ -123,7 +144,7 @@ export default function Addedit() {
           id='name'
           name='name'
           placeholder='Enter your name'
-          value={name || ''}
+          value={state.name || ''}
           onChange={handleChange}
         />
 
@@ -133,7 +154,7 @@ export default function Addedit() {
           id='email'
           name='email'
           placeholder='Enter your email'
-          value={email || ''}
+          value={state.email || ''}
           onChange={handleChange}
         />
 
@@ -143,30 +164,33 @@ export default function Addedit() {
           id='phno'
           name='phone'
           placeholder='Enter your Contact'
-          value={phone || ''}
+          value={state.phone || ''}
           onChange={handleChange}
         />
+
         <label htmlFor='salary'>Salary</label>
         <input
           type='number'
           id='salary'
           name='salary'
-          placeholder="₹ per annum"
-          value={salary || ''}
+          placeholder='Salary'
+          value={state.salary || ''}
           onChange={handleChange}
         />
 
-<label htmlFor='status'>Status</label>
-        <input
-          type='text'
+        <label htmlFor='status'>Status</label>
+        <select
           id='status'
           name='status'
-          placeholder='Enter your Status...'
-          value={status || ''}
+          value={state.status || ''}
           onChange={handleChange}
-        />
+        >
+          <option value=''>Select Status</option>
+          <option value='Active'>Active</option>
+          <option value='Inactive'>Inactive</option>
+        </select>
 
-        <input type='submit' value={id?"Update":"Save"} />
+        <strong><input type='submit' value={id ? 'Update' : 'Save'} /></strong>
       </form>
     </div>
   );

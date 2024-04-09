@@ -1,7 +1,7 @@
 .styled-table{
     border-collapse: collapse;
     margin:auto;
-    font-size:0.9em;
+    font-size:0.85em;
     font-family:sans-serif;
     max-width:1400px;
     box-shadow:0 0 23px rgba(0,0,0,0.15);
@@ -55,11 +55,15 @@
 .btn-view{
     background-color:#4777fa;
 }
-.dropdown{
+#dropdown{
     width:20%;
     margin:5px;
     margin:5px auto;
     text-align: center;
+    border:none;
+    border-radius: 5px;
+    height:37px;
+    font-size: 16px;
 }
 .btn-reset{
     background-color : #009879;
@@ -98,4 +102,21 @@
     .dropdown {
       width: 100%;
     }
+  }
+
+  .pagination{
+    margin-top: 20px;
+    padding-left: 600px;
+    display:flex;
+    justify-content:center;
+    
+
+  }
+  .pagination button{
+    padding:6px;
+    margin:2px;
+    border:none;
+    background-color: rgb(237, 105, 105);
+    color:white;
+    border-radius: 5px;
   }

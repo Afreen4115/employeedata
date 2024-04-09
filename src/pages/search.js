@@ -23,24 +23,26 @@ useEffect(() => {
 }, [search]);
 
 
-    const searchData = () => {
-        firedb.child("employeeData").orderByChild("name").equalTo(search).on("value",(snapshot) => {
-            if(snapshot.val()){
-                const data = snapshot.val();
-                setData(data);
-            }
-        })
-    }
+const searchData = () => {
+  const capitalizedSearch = search.charAt(0).toUpperCase() + search.slice(1);
+  firedb.child("employeeData").orderByChild("name").equalTo(capitalizedSearch).on("value", (snapshot) => {
+      if(snapshot.val()){
+          const data = snapshot.val();
+          setData(data);
+      }
+  });
+};
+
   return (
     <>
-    <div style={{marginTop:"100px"}}>
+    <div style={{marginTop:"70px"}}>
     <Link to="/" style={{margin:'auto' , paddingLeft:'575px'}}>
-        <button className='btn btn-edit'>Go Back</button>
+        <button className='btn btn-edit' style={{width:'120px' ,height:'40px', borderRadius:'6px'}}>Go Back</button>
     </Link>
     {Object.keys(data).length === 0 ?(
-        <h2>No Search Found With That Name : {query.get("name")}</h2>
+        <h2  style={{paddingLeft:'400px', marginTop:'50px'}}>No Search Found With That Name : {query.get("name")}</h2>
     ):(
-        <table className='styled-table'>
+        <table className='styled-table' style={{marginTop:'30px'}}>
       <thead>
         <tr>
           <th style={{textAlign:"center"}}>No.</th>

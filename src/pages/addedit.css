@@ -20,7 +20,7 @@ input[type='email'],
 input[type='number'],
 select {
     width:100%;
-    padding:11px 16px;
+    padding:10px 15px;
     margin:5px 0;
     display:inline-block;
     border-radius:4px;
@@ -31,11 +31,11 @@ select {
 }
 input[type='submit']{
     width:30%;
-    background-color:#6db06d;
+    background-color:#4a68ba;
     color:white;
-    border:none;
+    border:1px solid rgb(147, 147, 147);
     padding:8px 5px;
-    border-radius: 5px;
+    border-radius: 7px;
     cursor:pointer;
     font-size: 15px;
     margin:10px 0;
@@ -43,7 +43,6 @@ input[type='submit']{
     font-family:'Times New Roman', Times, serif
 }
 input[type="submit"]:hover{
-    background-color:#18701c;
-    font-size:1.3rem ;
-    width:45%;
+    background-color:#d8773a;
+    width:33%;
   }

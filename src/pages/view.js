@@ -57,7 +57,7 @@ export default function View() {
               <br/>
               <br/>
               <Link to='/'>
-                <button className="btn btn-edit" style={{marginBottom:'18px'}}>Go Back</button>
+                <button className="btn btn-edit" style={{marginBottom:'18px',width:'100px' ,borderRadius:'7px',padding:'5px'}}>Go Back</button>
               </Link>
             </>
           )}
