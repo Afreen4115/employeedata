@@ -12,7 +12,7 @@ form {
     font-size: 15px;
     border-radius: 10px;
     border:none;
-    color:whitesmoke
+    /* color:whitesmoke */
 }
 input[type='text'],
 input[type='tel'],

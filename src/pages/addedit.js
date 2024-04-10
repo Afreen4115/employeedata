@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import firedb from '../firebase';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faEdit } from '@fortawesome/free-solid-svg-icons';
+
 import './addedit.css';
 
 const initialState = {
@@ -69,32 +68,42 @@ export default function Addedit() {
     const phoneExists = Object.values(data).some(item => item.phone === phone);
   
     if (!name || !email || !phone || !salary || !status) {
-      toast.error('Please provide value in each input field');
-    } else if (emailExists && id !== Object.keys(data).find(key => key !== id)) {
-      toast.error('Email already exists');
-    } else if (phoneExists && id !== Object.keys(data).find(key => key !== id)) {
-      toast.error('Phone number already exists');
-    } else {
-      if (!id) {
-        firedb.child('employeeData').push(state, (err) => {
-          if (err) {
-            toast.error(err);
-          } else {
-            toast.success('Employee details added successfully!');
-          }
-        });
+      toast.error('Please provide a value in each input field');
+    } else if (id) { // For update
+      if (emailExists && email !== data[id].email) {
+        toast.error('Email already exists');
+      } else if (phoneExists && phone !== data[id].phone) {
+        toast.error('Phone number already exists');
       } else {
         firedb.child(`employeeData/${id}`).set(state, (err) => {
           if (err) {
             toast.error(err);
           } else {
             toast.success('Employee details updated successfully!');
+            navigate('/');
           }
         });
       }
-      setTimeout(() => navigate('/'), 500);
+    } else { // For save
+      if (emailExists) {
+        toast.error('Email already exists');
+        navigate('/');
+      } else if (phoneExists) {
+        toast.error('Phone number already exists');
+        navigate('/');
+      } else {
+        firedb.child('employeeData').push(state, (err) => {
+          if (err) {
+            toast.error(err);
+          } else {
+            toast.success('Employee details added successfully!');
+            navigate('/');
+          }
+        });
+      }
     }
   };
+  
   
 
   // const handleSubmit = (e) => {
